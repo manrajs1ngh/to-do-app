@@ -55,12 +55,6 @@ p {
   font-size: 16px;
 }
 
-.form__container {
-  display: flex;
-  justify-content: center;
-  padding: 4px;
-}
-
 .form__input {
   background-color: white;
   color: black;
@@ -69,8 +63,12 @@ p {
   border-radius: 32px;
   transition: all 300ms ease;
   margin-bottom: 8px;
-  width: 75%;
   padding: 16px 16px;
+  display: block; /* Changed from inline-block to block */
+  width: 100%; /* Set width to 100% */
+  box-sizing: border-box; /* Include padding and border in the element's total width */
+  flex-grow: 1; /* This will make the input grow */
+  margin-right: 8px;
 }
 
 .form__btn {
@@ -83,6 +81,7 @@ p {
   margin-bottom: 16px;
   border: 1px solid #004e92;
   cursor: pointer;
+  flex-shrink: 0; /* Prevent the button from shrinking */
 }
 
 .form__btn:hover {

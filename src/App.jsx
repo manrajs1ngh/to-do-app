@@ -11,6 +11,7 @@ import {
   updateDoc,
   doc,
   addDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 function App() {
@@ -28,8 +29,8 @@ function App() {
       text: inputValue,
       completed: false,
     });
-    setInputValue("");
-  }
+    setInputValue(" ");
+  };
 
   // Read the input value from Firebase
   useEffect(() => {
@@ -52,7 +53,15 @@ function App() {
       completed: !todo.completed,
     });
   };
+
   // Delete a todo
+  const deleteTodo = async (todo) => {
+    if (todo && todo.id) {
+      await deleteDoc(doc(db, "todos", todo.id));
+    } else {
+      console.error("Todo or todo.id is undefined");
+    }
+  };
 
   return (
     <>
@@ -74,10 +83,16 @@ function App() {
             </form>
           </div>
           <ul>
-            {todos.map((item, index) => (
-              <Todo key={index} todo={item} toggleComplete={toggleComplete} />
+            {todos.map((todo) => (
+              <Todo
+                key={todo.id}
+                todo={todo}
+                toggleComplete={() => toggleComplete(todo)}
+                deleteTodo={() => deleteTodo(todo)}
+              />
             ))}
           </ul>
+
           <p>{`You have ${todos.length} remaining tasks.`}</p>
         </div>
       </div>
